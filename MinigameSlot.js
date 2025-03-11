@@ -1915,33 +1915,33 @@ function setPlayCntUI(playCntTxt, playCnt, fontStyle) {
 }
 
 /**
- * 모델의 winCnt에 기반하여 랜덤으로 모델을 선택.
- * @returns 선택된 모델의 INDEX
+ * モデルのwinCntによってランダムで選択
+ * @returns 選択されたモデルのINDEX
  */
 function getRadomWithCalcModelCntPercentage() {
-    let sum = 0; // 누적된 winCnt 값
-    let modelIdx = null; // 선택된 모델의 인덱스
-    let totalWinCnt = modelList.reduce((acc, cur) => acc + cur.winCnt, 0); // 전체 winCnt 합계
+    let sum = 0; // 累積されたwinCntの値
+    let modelIdx = null; // 選択されたモデルのインデックス
+    let totalWinCnt = modelList.reduce((acc, cur) => acc + cur.winCnt, 0); // 全体のwinCntの合計
 
-    // 0 ~ totalWinCnt 사이의 랜덤 값을 생성
+    // 0 ~ totalWinCntの間でランダムな値を生成
     const rand = Math.round(Math.random() * totalWinCnt);
     console.log("totalWinCnt=", totalWinCnt, ",rand=", rand);
 
     for (let i = 0; i < modelList.length; i++) {
-        const min = sum; // 현재 모델의 확률 범위의 시작
-        sum += modelList[i].winCnt; // 현재 모델의 winCnt를 누적하여 확률 범위 계산
-        const max = sum; // 현재 모델의 확률 범위의 끝
+        const min = sum; // 現在のモデルの確率範囲の開始
+        sum += modelList[i].winCnt; // 現在のモデルのwinCntを累積して確率範囲を計算
+        const max = sum; // 現在のモデルの確率範囲の終了
 
-        // 랜덤 값이 현재 모델의 확률 범위 안에 포함되면 선택
+        // ランダムな値が現在のモデルの確率範囲に含まれていれば選択
         if (rand < sum) {
-            modelIdx = i; // 선택된 모델의 인덱스 저장
+            modelIdx = i; // 選択されたモデルのインデックスを保存
             console.log(`★i(${i}) ${min} ~ ${max}, ${modelList[modelIdx].name}, modelIdx=${modelIdx}`);
-            break; // 반복문 종료
+            break; // ループ終了
         }
 
-        // 현재 모델을 지나간 경우 로그 출력
+        // 現在のモデルを過ぎた場合、ログを出力
         console.log(`i(${i}) sum= ${sum}, modelIdx= ${modelIdx}`);
     }
 
-    return modelIdx; // 선택된 모델의 인덱스 반환
+    return modelIdx; // 選択されたモデルのインデックスを返す
 }
